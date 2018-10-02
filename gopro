@@ -4,7 +4,7 @@ function timelapse() {
     filename="$2"
     resolution_width="$3"
     resolution_height="$4"
-    $(which ls) -1tr *.JPG > gopro_timelapse_list.txt
+    $(which ls) -1tr *.PNG > gopro_timelapse_list.txt
     mencoder -nosound -ovc x264 \
         -vf scale=$resolution_width:$resolution_height -mf type=jpeg:fps=$framerate \
         mf://@gopro_timelapse_list.txt -o $filename
@@ -33,7 +33,7 @@ function fisheye(){
 		distortion_args="0 0 -0.1";;
 	esac
 	if [[ $1 == "" ]];then
-		for photo in *.JPG;
+		for photo in *.PNG;
 			do timestamp=`stat -c %y $photo`;
 			mogrify -distort barrel "$distortion_args" $photo;
 			touch -d "$timestamp" $photo;
